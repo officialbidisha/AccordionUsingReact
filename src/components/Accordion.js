@@ -35,10 +35,12 @@ Accordion.Frame = function AccordionFrame({ children, ...restProps })  {
 
 Accordion.Item = function AccordionItem ({ children, ...restProps }) {
   const [toggleShow, setToggleShow] = useState(true);
-  const toggle = useCallback(()=> setToggleShow((prevState)=> !prevState), []);
-  let val = useMemo(()=> ({toggleShow, toggle}), [toggle, toggleShow])
+  /** 
+  * const toggle = useCallback(()=> setToggleShow((prevState)=> !prevState), []);
+  * let val = useMemo(()=> ({toggleShow, toggle}), [toggle, toggleShow])
+  */
   return (
-    <AccordionContext.Provider value={val}>
+    <AccordionContext.Provider value={{toggleShow, setToggleShow}}>
       <div className="accordion-item" {...restProps}>
         {children}
       </div>
@@ -51,7 +53,7 @@ Accordion.Header = function AccordionHeader({
   children,
   ...restProps
 }) {
-  const { toggleShow, toggle } = useContext(AccordionContext);
+  const { toggleShow, setToggleShow } = useContext(AccordionContext);
   /**
    * Check for mounting
    */
@@ -72,7 +74,8 @@ Accordion.Header = function AccordionHeader({
     <div 
     className="header" 
     {...restProps} 
-    onClick={toggle}
+    onClick={()=> {setToggleShow(!toggleShow)}}
+    // onClick={toggle}
     >
       {children}
     </div>
