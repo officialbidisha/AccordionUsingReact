@@ -1,0 +1,45 @@
+.container{
+    padding: 10px;
+    background-color: blueviolet;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.accordion-body.closed{
+        display: none;
+}
+
+.title{
+    padding: 10px 0;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.accordion-item{
+    margin: 10px 0
+}
+.header{
+    color: azure;
+    font-size: 18px;
+    font-weight: 600;
+}
+.accordion-body.open{
+    margin: 5px 0;
+    color: ghostwhite;
+    border: 1px solid pink;
+    padding: 10px;
+    text-align: center;
+    text-align: justify;
+}
+
+/*.accordion-item::after{
+    content:" ";
+    display: block;
+    height: 2px;
+    width: 130px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    background: red;
+} */
