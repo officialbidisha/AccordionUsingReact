@@ -31,6 +31,7 @@
     padding: 10px;
     text-align: center;
     text-align: justify;
+    border-radius: 15px;
 }
 
 /*.accordion-item::after{
