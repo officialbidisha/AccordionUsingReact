@@ -5,10 +5,6 @@
     margin: 10px;
 }
 
-.accordion-body.closed{
-        display: none;
-}
-
 .title{
     padding: 10px 0;
     color: white;
@@ -23,8 +19,11 @@
     color: azure;
     font-size: 18px;
     font-weight: 600;
+    cursor: pointer;
+    border:1px solid wheat;
+    border-radius: 10px;
 }
-.accordion-body.open{
+.accordion-body{
     margin: 5px 0;
     color: ghostwhite;
     border: 1px solid pink;

@@ -50,15 +50,16 @@ Accordion.Header = function AccordionHeader({ children, ...restProps })  {
 };
 
 Accordion.Body = function AccordionBody({ children, ...restProps }) {
+    
     const { toggleShow } = useContext(AccordionContext);
-    return (
+    return !toggleShow &&
       <div
-        className={`accordion-body ${toggleShow? 'open': 'closed'}`}
+        className="accordion-body"
         {...restProps}
       >
         {children}
       </div>
-    );
+    ;
   };
 
 export default Accordion;
