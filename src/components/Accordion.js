@@ -1,4 +1,12 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import "./Accordion.css";
 const AccordionContext = createContext();
 const Accordion = ({ children, ...restProps }) => {
@@ -27,8 +35,10 @@ Accordion.Frame = function AccordionFrame({ children, ...restProps })  {
 
 Accordion.Item = function AccordionItem ({ children, ...restProps }) {
   const [toggleShow, setToggleShow] = useState(true);
+  const toggle = useCallback(()=> setToggleShow((prevState)=> !prevState), []);
+  let val = useMemo(()=> ({toggleShow, toggle}), [toggle, toggleShow])
   return (
-    <AccordionContext.Provider value={{ toggleShow, setToggleShow }}>
+    <AccordionContext.Provider value={val}>
       <div className="accordion-item" {...restProps}>
         {children}
       </div>
@@ -36,13 +46,33 @@ Accordion.Item = function AccordionItem ({ children, ...restProps }) {
   );
 };
 
-Accordion.Header = function AccordionHeader({ children, ...restProps })  {
-  const { toggleShow, setToggleShow } = useContext(AccordionContext);
+Accordion.Header = function AccordionHeader({
+  onToggle,
+  children,
+  ...restProps
+}) {
+  const { toggleShow, toggle } = useContext(AccordionContext);
+  /**
+   * Check for mounting
+   */
+  const componentJustMounted = useRef(true);
+
+  /**
+   * Function to call when the expanded state is altered tp true,
+   * that is when the expansion happens.
+   */
+  useEffect(() => {
+    if (!componentJustMounted.current) {
+      onToggle(toggleShow);
+    }
+    componentJustMounted.current = false;
+  }, [toggleShow, onToggle]);
+
   return (
-    <div
-      className="header"
-      {...restProps}
-      onClick={() => setToggleShow(!toggleShow)}
+    <div 
+    className="header" 
+    {...restProps} 
+    onClick={toggle}
     >
       {children}
     </div>
@@ -50,16 +80,16 @@ Accordion.Header = function AccordionHeader({ children, ...restProps })  {
 };
 
 Accordion.Body = function AccordionBody({ children, ...restProps }) {
-    
-    const { toggleShow } = useContext(AccordionContext);
-    return !toggleShow &&
-      <div
-        className="accordion-body"
-        {...restProps}
+  
+  const { toggleShow } = useContext(AccordionContext);
+  return !toggleShow && 
+      <div 
+      className="accordion-body" 
+      {...restProps}
       >
         {children}
       </div>
-    ;
-  };
+  ;
+};
 
 export default Accordion;

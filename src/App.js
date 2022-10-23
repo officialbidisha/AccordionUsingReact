@@ -12,7 +12,7 @@ function App() {
           {data.map((datum) => {
             return (
               <Accordion.Item key={datum.id}>
-                <Accordion.Header>{datum.header}</Accordion.Header>
+                <Accordion.Header onToggle={(state)=> {console.log(state)}}>{datum.header}</Accordion.Header>
                 <Accordion.Body>{datum.body}</Accordion.Body>
               </Accordion.Item>
             );
