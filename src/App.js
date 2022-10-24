@@ -3,7 +3,6 @@ import Accordion from "./components/Accordion";
 import data from "./data";
 
 function App() {
-  console.log(data);
   return (
     <div className="App">
       <Accordion>
